@@ -12,8 +12,8 @@ def ask_genai(question):
             ]
         )
 
-        print(completion.choices[0].message, 155555)
+        print(completion.choices[0].message)
         return completion.choices[0].message
     except Exception as e:
-        print(f"General error: {e}", 155555)
+        print(f"General error: {e}")
         return str(e)
