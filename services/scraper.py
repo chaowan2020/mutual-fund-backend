@@ -1,13 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 
-def scrape_mutual_fund_data():
-    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=INDEXNASDAQ&apikey=BLNLMLH5L5Z25HT7"
+def scrape_mutual_fund_data(id):
+    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={id}&apikey=BLNLMLH5L5Z25HT7"
     response = requests.get(url)
     if response.status_code != 200:
         return None
     data = response.json()
-    print(777, data)
     if "Time Series (Daily)" not in data:
         return None
 
@@ -25,3 +24,19 @@ def scrape_mutual_fund_data():
         })
 
     return parsed_data
+
+def analyze_mutual_fund(id):
+    data = scrape_mutual_fund_data(id)
+    if not data:
+        return None
+
+    # Example analysis: calculating the average closing price
+    total_close = sum(float(day["close"]) for day in data)
+    average_close = total_close / len(data)
+
+    analysis = {
+        "average_close": average_close,
+        "data_points": len(data)
+    }
+
+    return analysis
