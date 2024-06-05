@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 def scrape_mutual_fund_data(id):
-    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={id}&apikey=BLNLMLH5L5Z25HT7"
+    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={id}&apikey=79HOWNP77EIUU0RO"
     response = requests.get(url)
     if response.status_code != 200:
         return None
@@ -26,17 +26,33 @@ def scrape_mutual_fund_data(id):
     return parsed_data
 
 def analyze_mutual_fund(id):
-    data = scrape_mutual_fund_data(id)
-    if not data:
-        return None
+    url = f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={id}&apikey=79HOWNP77EIUU0RO"
+    r = requests.get(url)
+    data = r.json()
+    return data
 
-    # Example analysis: calculating the average closing price
-    total_close = sum(float(day["close"]) for day in data)
-    average_close = total_close / len(data)
 
-    analysis = {
-        "average_close": average_close,
-        "data_points": len(data)
+def get_market_news_and_sentiment(tickers=None, time_from=None, time_to=None, sort="LATEST", limit=50):
+    base_url = "https://www.alphavantage.co/query"
+    topics = "financial_markets,finance,economy_fiscal,economy_monetary,economy_macro,real_estate,technology"
+
+    params = {
+        "function": "NEWS_SENTIMENT",
+        # "topics": topics,
+        "apikey": "79HOWNP77EIUU0RO",
+        # "sort": sort,
+        "limit": "5"
     }
 
-    return analysis
+    # if tickers:
+    #     params["tickers"] = tickers
+    # if time_from:
+    #     params["time_from"] = time_from
+    # if time_to:
+    #     params["time_to"] = time_to
+
+    response = requests.get(base_url, params=params)
+    if response.status_code != 200:
+        return None
+
+    return response.json()
