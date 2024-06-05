@@ -1,6 +1,6 @@
 # Mutual Fund Backend
 
-This repository contains the backend code for the Mutual Fund Dashboard and Analysis project. Developed with Python and Flask, it includes APIs for scraping mutual fund data, serving it to the frontend, and integrating with a GenAI model to provide natural language insights and user query responses. The backend also manages data storage and processing.
+This repository contains the backend code for the Mutual Fund Dashboard and Analysis project. Developed with Python and Flask, it includes APIs for scraping mutual fund data and serving it to the frontend. The backend seamlessly integrates with a GenAI model, enhancing its ability to provide insightful responses to user queries and natural language insights. Additionally, it efficiently handles data storage and processing to ensure smooth and reliable operations.
 
 ## Table of Contents
 
